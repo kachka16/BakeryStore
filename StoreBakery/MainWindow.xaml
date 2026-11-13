@@ -1,0 +1,17 @@
+﻿<Window x:Class="StoreBakery.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        xmlns:local="clr-namespace:StoreBakery"
+        mc:Ignorable="d"
+        Title="Вхід" Height="1080" Width="1920" WindowState="Maximized">
+    <Grid Background="#FF60479A">
+        <Label Content="Вітаю!" HorizontalAlignment="Center" VerticalAlignment="Top" FontWeight="Bold" FontFamily="Franklin Gothic Demi Cond" Foreground="White" FontSize="75" Margin="0,338,0,0"/>
+        <Label Content="Увійдіть в систему" HorizontalAlignment="Center" VerticalAlignment="Top" Foreground="White" FontSize="36" FontFamily="Franklin Gothic Demi Cond" Margin="0,432,0,0"/>
+        <Border CornerRadius="20" Background="White" HorizontalAlignment="Center" Margin="0,522,0,0" VerticalAlignment="Top" Width="320" Height="82" x:Name ="bthMain">
+            <Button Content="Перейти" FontWeight="Bold" Foreground="#FF66429C" FontSize="30" Background="Transparent" BorderBrush="Transparent" BorderThickness="0" Click="AutoWind" Height="63" VerticalAlignment="Center"/>
+        </Border>
+    </Grid>
+</Window>

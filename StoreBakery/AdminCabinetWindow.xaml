@@ -1,0 +1,354 @@
+﻿<Window Height="1200" Title="Адмін панель" Width="1920" WindowState="Maximized" mc:Ignorable="d" x:Class="StoreBakery.AdminCabinetWindow" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:local="clr-namespace:StoreBakery" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <Window.Resources>
+        <Style TargetType="TextBox" x:Key="InputBox">
+            <Setter Property="FontSize" Value="18"/>
+            <Setter Property="Height" Value="44"/>
+            <Setter Property="Padding" Value="10,0"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="Margin" Value="0,0,0,12"/>
+            <Setter Property="Background" Value="#FFF7F4FB"/>
+            <Setter Property="BorderBrush" Value="#FFCFBFE2"/>
+        </Style>
+
+        <Style TargetType="PasswordBox" x:Key="PassInput">
+            <Setter Property="FontSize" Value="18"/>
+            <Setter Property="Height" Value="44"/>
+            <Setter Property="Padding" Value="10,0"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="Margin" Value="0,0,0,12"/>
+            <Setter Property="Background" Value="#FFF7F4FB"/>
+            <Setter Property="BorderBrush" Value="#FFCFBFE2"/>
+        </Style>
+
+        <Style TargetType="Button" x:Key="PrimaryBtn">
+            <Setter Property="Background" Value="#FF7848AC"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="FontSize" Value="18"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="Height" Value="46"/>
+            <Setter Property="Margin" Value="0,0,0,12"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Cursor" Value="Hand"/>
+        </Style>
+
+        <Style TargetType="Button" x:Key="SoftBtn">
+            <Setter Property="Background" Value="#FFA880C6"/>
+            <Setter Property="Foreground" Value="#FF4E1C67"/>
+            <Setter Property="FontSize" Value="18"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="Height" Value="46"/>
+            <Setter Property="Margin" Value="0,0,0,12"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Cursor" Value="Hand"/>
+        </Style>
+
+        <Style TargetType="Button" x:Key="DangerBtn">
+            <Setter Property="Background" Value="#FFD32F2F"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="FontSize" Value="18"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="Height" Value="46"/>
+            <Setter Property="Margin" Value="0,0,0,12"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Cursor" Value="Hand"/>
+        </Style>
+
+        <Style TargetType="TextBlock" x:Key="LabelText">
+            <Setter Property="FontSize" Value="16"/>
+            <Setter Property="Foreground" Value="#FF555555"/>
+            <Setter Property="Margin" Value="0,0,0,6"/>
+        </Style>
+
+        <Style TargetType="TextBlock" x:Key="Heading">
+            <Setter Property="FontSize" Value="22"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="Foreground" Value="#FF4A148C"/>
+            <Setter Property="Margin" Value="0,0,0,16"/>
+        </Style>
+
+        <Style TargetType="Border" x:Key="Card">
+            <Setter Property="Background" Value="White"/>
+            <Setter Property="CornerRadius" Value="16"/>
+            <Setter Property="Padding" Value="25"/>
+            <Setter Property="Margin" Value="0,0,0,20"/>
+        </Style>
+
+        <Style TargetType="DataGridColumnHeader" x:Key="GridHeader">
+            <Setter Property="Background" Value="#FFEAE0F1"/>
+            <Setter Property="Foreground" Value="#FF4A148C"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="FontSize" Value="16"/>
+            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Padding" Value="0,10"/>
+        </Style>
+    </Window.Resources>
+
+    <DockPanel LastChildFill="True">
+        <Border Background="#FF6B21A8" DockPanel.Dock="Top" Height="80" Padding="20,0">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+
+                <Border Background="#FFDEC7FF" CornerRadius="10" Grid.Column="2" Height="50" Margin="0,0,15,0" Padding="25,0" VerticalAlignment="Center">
+                    <TextBlock FontFamily="Cooper Black" FontSize="18" FontWeight="Bold" Foreground="#FF7848AC" Text="Адміністратор" VerticalAlignment="Center"/>
+                </Border>
+
+                <Border Background="#FFB17AFF" CornerRadius="10" Grid.Column="3" Height="50" VerticalAlignment="Center">
+                    <Button Background="Transparent" BorderBrush="Transparent" Click="exitAdmin" Content="Вийти" FontFamily="Cooper Black" FontSize="18" FontWeight="Bold" Foreground="#FF623198" Height="50" Width="150"/>
+                </Border>
+            </Grid>
+        </Border>
+
+        <Grid Background="#FF8D86B1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="350"/>
+            </Grid.ColumnDefinitions>
+
+            <Border Background="#FFF3EFF8" ClipToBounds="True" CornerRadius="20,0,0,20" Grid.Column="0" Margin="20,20,0,20" Padding="25">
+                <Grid>
+                    <Grid x:Name="ReportsPanel">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+
+                        <Border Grid.Row="0" Style="{StaticResource Card}">
+                            <StackPanel>
+                                <TextBlock Style="{StaticResource Heading}"><Run Language="uk-ua" Text="Виберіть період"/></TextBlock>
+
+                                <StackPanel Orientation="Horizontal">
+                                    <StackPanel Margin="0,0,20,0">
+                                        <TextBlock Style="{StaticResource LabelText}" Text="Дата 1 (початок)"/>
+                                        <DatePicker FontSize="18" Height="44" Width="240" x:Name="Date1Picker"/>
+                                    </StackPanel>
+
+                                    <StackPanel Margin="0,0,20,0">
+                                        <TextBlock Style="{StaticResource LabelText}" Text="Дата 2 (кінець)"/>
+                                        <DatePicker FontSize="18" Height="44" Width="240" x:Name="Date2Picker"/>
+                                    </StackPanel>
+
+                                    <Button Click="ShowReports_Click" Content="Показати" Margin="0,28,0,0" Style="{StaticResource PrimaryBtn}" VerticalAlignment="Top" Width="200"/>
+                                </StackPanel>
+                            </StackPanel>
+                        </Border>
+
+                        <Border Grid.Row="1" Margin="0" Style="{StaticResource Card}">
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="*"/>
+                                </Grid.RowDefinitions>
+                                <TextBlock Style="{StaticResource Heading}" Text="Z-звіти"/>
+                                <DataGrid AlternatingRowBackground="#FFE4E4F0" AutoGenerateColumns="False" Background="Transparent" BorderThickness="0" CanUserAddRows="False" CanUserDeleteRows="False" CanUserResizeRows="False" ColumnHeaderHeight="44" ColumnHeaderStyle="{StaticResource GridHeader}" FontSize="16" Grid.Row="1" GridLinesVisibility="None" HeadersVisibility="Column" IsReadOnly="True" RowBackground="#FFE4E4F0" RowHeight="42" SelectionMode="Single" x:Name="ZReportsGrid">
+                                    <DataGrid.Columns>
+                                        <DataGridTextColumn Binding="{Binding ClosedAtText}" Header="Закрито" Width="*"/>
+                                        <DataGridTextColumn Binding="{Binding Checks}" Header="Чеків" Width="100"/>
+                                        <DataGridTextColumn Binding="{Binding CashSales, StringFormat={}{0:0.00} грн}" Header="Готівка" Width="160"/>
+                                        <DataGridTextColumn Binding="{Binding CardSales, StringFormat={}{0:0.00} грн}" Header="Картка" Width="160"/>
+                                        <DataGridTextColumn Binding="{Binding Vnesennya, StringFormat={}{0:0.00} грн}" Header="Внесення" Width="160"/>
+                                        <DataGridTextColumn Binding="{Binding Vidacha, StringFormat={}{0:0.00} грн}" Header="Видача" Width="160"/>
+                                        <DataGridTextColumn Binding="{Binding CashInBox, StringFormat={}{0:0.00} грн}" Header="У касі" Width="160"/>
+                                    </DataGrid.Columns>
+                                </DataGrid>
+                            </Grid>
+                        </Border>
+                    </Grid>
+
+                    <Grid Visibility="Collapsed" x:Name="CashiersPanel">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="260"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+
+                        <Border Grid.Column="0" Margin="0,0,20,0" Style="{StaticResource Card}">
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="*"/>
+                                </Grid.RowDefinitions>
+                                <TextBlock Style="{StaticResource Heading}" Text="Касири"/>
+                                <ListBox Background="Transparent" BorderThickness="0" DisplayMemberPath="Login" FontSize="18" Grid.Row="1" SelectionChanged="CashiersList_SelectionChanged" x:Name="CashiersList"/>
+                            </Grid>
+                        </Border>
+
+                        <Border Grid.Column="1" Style="{StaticResource Card}">
+                            <StackPanel>
+                                <TextBlock Style="{StaticResource Heading}" Text="Керування обліковим записом"/>
+                                <TextBlock FontSize="18" FontWeight="SemiBold" Foreground="#FF4A148C" Margin="0,0,0,20" Text="Оберіть логін касира" x:Name="CashierInfoText"/>
+
+                                <TextBlock Style="{StaticResource LabelText}" Text="Новий логін"/>
+                                <TextBox HorizontalAlignment="Left" Style="{StaticResource InputBox}" Width="400" x:Name="NewLoginBox"/>
+
+                                <TextBlock Margin="0,8,0,6" Style="{StaticResource LabelText}" Text="Новий пароль"/>
+                                <PasswordBox HorizontalAlignment="Left" Style="{StaticResource PassInput}" Width="400" x:Name="NewPassBox"/>
+
+                                <Button Click="SaveCashier_Click" Content="Змінити" HorizontalAlignment="Left" Style="{StaticResource PrimaryBtn}" Width="400"/>
+
+                                <Button Click="DeleteCashier_Click" Content="Видалити логін з БД" HorizontalAlignment="Left" Margin="0" Style="{StaticResource DangerBtn}" Width="400"/>
+                            </StackPanel>
+                        </Border>
+                    </Grid>
+
+                    <Grid Visibility="Collapsed" x:Name="ProductsPanel">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+
+                        <Grid Grid.Row="0" Margin="0,0,0,20">
+                            <StackPanel HorizontalAlignment="Right" Orientation="Horizontal">
+                                <Button Click="AddCategory_Click" Content="+ Додати категорію" Height="50" Margin="0,0,15,0" Style="{StaticResource SoftBtn}" VerticalAlignment="Center" Width="220"/>
+                                <Button Click="AddProduct_Click" Content="+ Додати товар" Height="50" Margin="0" Style="{StaticResource PrimaryBtn}" VerticalAlignment="Center" Width="220"/>
+                            </StackPanel>
+                        </Grid>
+
+                        <Border Background="White" ClipToBounds="True" CornerRadius="20" Grid.Row="1" Padding="0">
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="*"/>
+                                </Grid.RowDefinitions>
+
+                                <Border Background="#FFEAE0F1" CornerRadius="20,20,0,0" Grid.Row="0">
+                                    <Grid Height="54">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="150"/>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="200"/>
+                                            <ColumnDefinition Width="150"/>
+                                            <ColumnDefinition Width="160"/>
+                                            <ColumnDefinition Width="170"/>
+                                        </Grid.ColumnDefinitions>
+
+                                        <TextBlock FontSize="16" FontWeight="Bold" Foreground="#FF4A148C" Grid.Column="0" Margin="30,0,0,0" Text="Код товару" VerticalAlignment="Center"/>
+                                        <TextBlock FontSize="16" FontWeight="Bold" Foreground="#FF4A148C" Grid.Column="1" Margin="15,0,0,0" Text="Назва товару" VerticalAlignment="Center"/>
+                                        <TextBlock FontSize="16" FontWeight="Bold" Foreground="#FF4A148C" Grid.Column="2" HorizontalAlignment="Center" Text="Категорія" VerticalAlignment="Center"/>
+                                        <TextBlock FontSize="16" FontWeight="Bold" Foreground="#FF4A148C" Grid.Column="3" HorizontalAlignment="Center" Text="Кількість" VerticalAlignment="Center"/>
+                                        <TextBlock FontSize="16" FontWeight="Bold" Foreground="#FF4A148C" Grid.Column="4" HorizontalAlignment="Center" Text="Ціна" VerticalAlignment="Center"/>
+                                    </Grid>
+                                </Border>
+
+                                <ListView Background="Transparent" BorderThickness="0" Grid.Row="1" Margin="15,12,15,0" x:Name="ProductsList">
+                                    <ListView.ItemContainerStyle>
+                                        <Style TargetType="ListViewItem">
+                                            <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                                            <Setter Property="Background" Value="Transparent"/>
+                                            <Setter Property="Padding" Value="0"/>
+                                            <Setter Property="Template">
+                                                <Setter.Value>
+                                                    <ControlTemplate TargetType="ListViewItem">
+                                                        <Border Background="#FFE4E4F0" CornerRadius="12" Height="62" Margin="0,0,0,10">
+                                                            <ContentPresenter VerticalAlignment="Center"/>
+                                                        </Border>
+                                                    </ControlTemplate>
+                                                </Setter.Value>
+                                            </Setter>
+                                        </Style>
+                                    </ListView.ItemContainerStyle>
+
+                                    <ListView.ItemTemplate>
+                                        <DataTemplate>
+                                            <Grid>
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="150"/>
+                                                    <ColumnDefinition Width="*"/>
+                                                    <ColumnDefinition Width="200"/>
+                                                    <ColumnDefinition Width="150"/>
+                                                    <ColumnDefinition Width="160"/>
+                                                    <ColumnDefinition Width="170"/>
+                                                </Grid.ColumnDefinitions>
+
+                                                <TextBlock FontSize="16" FontWeight="SemiBold" Foreground="#FF917BBB" Grid.Column="0" Margin="15,0,0,0" Text="{Binding Code}" VerticalAlignment="Center"/>
+                                                <TextBlock FontSize="16" FontWeight="Bold" Foreground="#FF4A148C" Grid.Column="1" Margin="15,0,15,0" Text="{Binding Name}" TextTrimming="CharacterEllipsis" VerticalAlignment="Center"/>
+
+                                                <Border Background="#FFFCD5C5" CornerRadius="8" Grid.Column="2" Height="30" HorizontalAlignment="Center" Padding="14,0" VerticalAlignment="Center">
+                                                    <TextBlock FontSize="14" FontWeight="Bold" Foreground="#FFB5442B" Text="{Binding Category}" VerticalAlignment="Center"/>
+                                                </Border>
+
+                                                <TextBlock FontSize="16" FontWeight="SemiBold" Foreground="#FF333333" Grid.Column="3" HorizontalAlignment="Center" Text="{Binding Quantity, StringFormat={}{0:0.##} шт}" VerticalAlignment="Center"/>
+                                                <TextBlock FontSize="16" FontWeight="Bold" Foreground="#FF673AB7" Grid.Column="4" HorizontalAlignment="Center" Text="{Binding Price, StringFormat={}{0:0.00} грн}" VerticalAlignment="Center"/>
+
+                                                <Border Background="#FFDEC7FF" CornerRadius="8" Grid.Column="5" Height="38" HorizontalAlignment="Center" VerticalAlignment="Center" Width="150">
+                                                    <Button Background="Transparent" BorderBrush="Transparent" Click="EditProduct_Click" Content="Змінити" FontSize="16" FontWeight="Bold" Foreground="#FF7848AC" Height="38" Width="150"/>
+                                                </Border>
+                                            </Grid>
+                                        </DataTemplate>
+                                    </ListView.ItemTemplate>
+                                </ListView>
+                            </Grid>
+                        </Border>
+                    </Grid>
+                </Grid>
+            </Border>
+
+            <Border Background="#FFCFBFE2" CornerRadius="0,20,20,20" Grid.Column="1" Margin="0,20,20,20">
+                <Grid>
+                    <StackPanel HorizontalAlignment="Center" Margin="0,50,0,20" VerticalAlignment="Top">
+                        <Border Background="#FFA880C6" CornerRadius="8" Height="58" Margin="0,0,0,20" Width="260">
+                            <Button Background="Transparent" BorderBrush="{x:Null}" Click="MenuButton_Click" Content="ЗВІТИ" FontSize="22" FontWeight="Bold" Foreground="#FF4E1C67" Height="58" Tag="Reports" Width="260" x:Name="ReportsMenuBtn"/>
+                        </Border>
+
+                        <Border Background="#FFA880C6" CornerRadius="8" Height="58" Margin="0,0,0,20" Width="260">
+                            <Button Background="Transparent" BorderBrush="{x:Null}" Click="MenuButton_Click" Content="КАСИРИ" FontSize="22" FontWeight="Bold" Foreground="#FF4E1C67" Height="58" Tag="Cashiers" Width="260" x:Name="CashiersMenuBtn"/>
+                        </Border>
+
+                        <Border Background="#FFA880C6" CornerRadius="8" Height="58" Margin="0,0,0,20" Width="260">
+                            <Button Background="Transparent" BorderBrush="{x:Null}" Click="MenuButton_Click" Content="ТОВАРИ" FontSize="22" FontWeight="Bold" Foreground="#FF4E1C67" Height="58" Tag="Products" Width="260" x:Name="ProductsMenuBtn"/>
+                        </Border>
+                    </StackPanel>
+                </Grid>
+            </Border>
+
+            <Grid Background="#99483554" Grid.ColumnSpan="2" Panel.ZIndex="100" Visibility="Collapsed" x:Name="ProductFormPopup">
+                <Border Background="White" CornerRadius="20" HorizontalAlignment="Center" Padding="30" VerticalAlignment="Center" Width="560">
+                    <StackPanel>
+                        <TextBlock Style="{StaticResource Heading}" Text="Новий товар" x:Name="FormTitleText"/>
+
+                        <TextBlock Style="{StaticResource LabelText}" Text="Код товару"/>
+                        <TextBox Style="{StaticResource InputBox}" x:Name="CodeBox"/>
+
+                        <TextBlock Style="{StaticResource LabelText}" Text="Назва товару"/>
+                        <TextBox Style="{StaticResource InputBox}" x:Name="NameBox"/>
+
+                        <TextBlock Style="{StaticResource LabelText}" Text="Категорія"/>
+                        <ComboBox FontSize="18" Height="44" IsEditable="True" Margin="0,0,0,12" x:Name="CategoryBox"/>
+
+                        <TextBlock Style="{StaticResource LabelText}" Text="Ціна, грн"/>
+                        <TextBox Style="{StaticResource InputBox}" x:Name="PriceBox"/>
+
+                        <TextBlock Style="{StaticResource LabelText}" Text="Кількість на складі, шт"/>
+                        <TextBox Style="{StaticResource InputBox}" x:Name="QuantityBox"/>
+
+                        <StackPanel Margin="0,8,0,0" Orientation="Horizontal">
+                            <Button Click="SaveProduct_Click" Content="Зберегти" Margin="0,0,15,0" Style="{StaticResource PrimaryBtn}" Width="250"/>
+                            <Button Click="CancelProduct_Click" Content="Скасувати" Margin="0" Style="{StaticResource SoftBtn}" Width="250"/>
+                        </StackPanel>
+                    </StackPanel>
+                </Border>
+            </Grid>
+
+            <Grid Background="#99483554" Grid.ColumnSpan="2" Panel.ZIndex="100" Visibility="Collapsed" x:Name="CategoryFormPopup">
+                <Border Background="White" CornerRadius="20" HorizontalAlignment="Center" Padding="30" VerticalAlignment="Center" Width="480">
+                    <StackPanel>
+                        <TextBlock Style="{StaticResource Heading}" Text="Нова категорія"/>
+
+                        <TextBlock Style="{StaticResource LabelText}" Text="Назва категорії"/>
+                        <TextBox Style="{StaticResource InputBox}" x:Name="NewCategoryInputBox"/>
+
+                        <StackPanel HorizontalAlignment="Center" Margin="0,8,0,0" Orientation="Horizontal">
+                            <Button Click="SaveNewCategory_Click" Content="Створити" Margin="0,0,15,0" Style="{StaticResource PrimaryBtn}" Width="200"/>
+                            <Button Click="CancelNewCategory_Click" Content="Скасувати" Margin="0" Style="{StaticResource SoftBtn}" Width="200"/>
+                        </StackPanel>
+                    </StackPanel>
+                </Border>
+            </Grid>
+        </Grid>
+    </DockPanel>
+</Window>

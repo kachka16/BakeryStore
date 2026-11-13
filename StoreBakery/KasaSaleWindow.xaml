@@ -1,0 +1,450 @@
+﻿<Window x:Class="StoreBakery.KasaSaleWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:StoreBakery"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        mc:Ignorable="d"
+        Title="Продаж товарів" Height="1200" Width="1920" WindowState="Maximized">
+
+    <DockPanel LastChildFill="True">
+        <Border DockPanel.Dock="Top" Background="#FF6B21A8" Height="80" Padding="20,0">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+
+                <StackPanel Grid.Column="1" Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <Border Background="White" CornerRadius="15" Width="1000" Height="45">
+                        <TextBox x:Name="SearchTextBox" Width="1000" Height="45" Text="Пошук товару" FontSize="16" FontWeight="Bold" Foreground="#FF9A9A9A" Padding="15,5,0,0" 
+                 TextChanged="TextBox_TextChanged" 
+                 KeyDown="SearchTextBox_KeyDown" 
+                 GotFocus="SearchTextBox_GotFocus" 
+                 VerticalContentAlignment="Center" BorderBrush="Transparent" Background="Transparent"/>
+                    </Border>
+
+                    <Popup x:Name="SearchPopup" PlacementTarget="{Binding ElementName=SearchTextBox}" IsOpen="False" StaysOpen="False" Width="1000">
+                        <Border Background="White" BorderBrush="#FF7848AC" BorderThickness="1" CornerRadius="8" MaxHeight="220">
+                            <ListBox x:Name="SuggestionsListBox" SelectionChanged="SuggestionsListBox_SelectionChanged" BorderBrush="{x:Null}" Background="White">
+                                <ListBox.ItemTemplate>
+                                    <DataTemplate>
+                                        <TextBlock Text="{Binding DisplayText}" FontSize="16" Padding="8,5" Foreground="#333333"/>
+                                    </DataTemplate>
+                                </ListBox.ItemTemplate>
+                            </ListBox>
+                        </Border>
+                    </Popup>
+                </StackPanel>
+
+                <Border Grid.Column="2" CornerRadius="10" Background="#FFDEC7FF" VerticalAlignment="Center" Height="50" Padding="25,0" Margin="0,0,15,0">
+                    <TextBlock Text="Касир 1" VerticalAlignment="Center" FontSize="18" FontWeight="Bold" FontFamily="Cooper Black" Foreground="#FF7848AC"/>
+                </Border>
+
+                <Border Grid.Column="3" CornerRadius="10" Background="#FFB17AFF" VerticalAlignment="Center" Height="50">
+                    <Button Content="Вийти" Click="exitKasa" Width="150" Height="50" FontSize="18" FontWeight="Bold" FontFamily="Cooper Black" Foreground="#FF623198" Background="Transparent" BorderBrush="Transparent"/>
+                </Border>
+            </Grid>
+        </Border>
+
+        <Grid Background="#FF8D86B1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="350" />
+            </Grid.ColumnDefinitions>
+
+            <Grid Grid.Column="0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="100" />
+                </Grid.RowDefinitions>
+
+                <Border Grid.Row="0" Background="White" Margin="20,20,0,0" CornerRadius="20,0,0,0" ClipToBounds="True">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="50"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+
+                        <Border Grid.Row="0" Background="#FFEAE0F1" CornerRadius="20,0,0,0">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition Width="150"/>
+                                    <ColumnDefinition Width="129"/>
+                                    <ColumnDefinition Width="167"/>
+                                    <ColumnDefinition Width="141"/>
+                                    <ColumnDefinition Width="223"/>
+                                </Grid.ColumnDefinitions>
+
+                                <TextBlock Grid.Column="0" Text="Назва товару" FontWeight="Bold" FontSize="16" Foreground="#4A148C" VerticalAlignment="Center" Margin="35,0,0,0" Height="22"/>
+                                <TextBlock Grid.Column="1" Text="Код товару" FontWeight="Bold" FontSize="16" Foreground="#4A148C" VerticalAlignment="Center" HorizontalAlignment="Center" Height="22" Width="88"/>
+                                <TextBlock Grid.Column="2" Text="Кількість" FontWeight="Bold" FontSize="16" Foreground="#4A148C" VerticalAlignment="Center" HorizontalAlignment="Center" Height="22" Width="70"/>
+                                <TextBlock Grid.Column="3" Text="Ціна" FontWeight="Bold" FontSize="16" Foreground="#4A148C" VerticalAlignment="Center" HorizontalAlignment="Center" Height="22" Width="36"/>
+                                <TextBlock Grid.Column="4" Text="Сума" FontWeight="Bold" FontSize="16" Foreground="#4A148C" VerticalAlignment="Center" HorizontalAlignment="Center" Height="22" Width="39"/>
+
+                            </Grid>
+                        </Border>
+
+                        <ListView x:Name="CartListView" Grid.Row="1" Margin="15,10,15,0" Background="Transparent" BorderBrush="{x:Null}">
+                            <ListView.ItemContainerStyle>
+                                <Style TargetType="ListViewItem">
+                                    <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                                    <Setter Property="Background" Value="Transparent"/>
+                                    <Setter Property="Template">
+                                        <Setter.Value>
+                                            <ControlTemplate TargetType="ListViewItem">
+                                                <Border Background="#FFE4E4F0" CornerRadius="12" Padding="0,8" Height="60" Margin="0,0,0,10">
+                                                    <ContentPresenter/>
+                                                </Border>
+                                            </ControlTemplate>
+                                        </Setter.Value>
+                                    </Setter>
+                                </Style>
+                            </ListView.ItemContainerStyle>
+                            <ListView.ItemTemplate>
+                                <DataTemplate>
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="150"/>
+                                            <ColumnDefinition Width="150"/>
+                                            <ColumnDefinition Width="150"/>
+                                            <ColumnDefinition Width="180"/>
+                                            <ColumnDefinition Width="180"/>
+                                        </Grid.ColumnDefinitions>
+
+                                        <TextBlock Grid.Column="0" Text="{Binding Name}" FontSize="16" FontWeight="SemiBold" Foreground="#333333" VerticalAlignment="Center" Margin="15,0,0,0"/>
+                                        <TextBlock Grid.Column="1" Text="{Binding Code}" FontSize="16" FontWeight="SemiBold" Foreground="#FF8D8D8D" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                                        <TextBlock Grid.Column="2" Text="{Binding Quantity}" FontSize="16" FontWeight="SemiBold" Foreground="#333333" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                                        <TextBlock Grid.Column="3" Text="{Binding Price, StringFormat={}{0:F2} грн}" FontSize="16" FontWeight="SemiBold" Foreground="#FF8D8D8D" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                                        <TextBlock Grid.Column="4" Text="{Binding TotalAmount, StringFormat={}{0:F2} грн}" FontSize="16" FontWeight="Bold" Foreground="#673AB7" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+
+                                        <Border Grid.Column="5" Width="130" Height="38" CornerRadius="8" Background="#FFF38B8B" VerticalAlignment="Center" HorizontalAlignment="Center">
+                                            <Button Content="Видалити" Height="38" Background="Transparent" Foreground="#FF861717" FontSize="16" FontWeight="Bold" BorderBrush="Transparent" Click="DeleteCartItem_Click"/>
+                                        </Border>
+                                    </Grid>
+                                </DataTemplate>
+                            </ListView.ItemTemplate>
+                        </ListView>
+
+                        <!--<StackPanel Grid.Row="1" Margin="15,10,15,0" VerticalAlignment="Top">
+                            <Border Background="#FFE4E4F0" CornerRadius="12" Padding="0,8" Height="60">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="150"/>
+                                        <ColumnDefinition Width="150"/>
+                                        <ColumnDefinition Width="150"/>
+                                        <ColumnDefinition Width="180"/>
+                                        <ColumnDefinition Width="180"/>
+                                    </Grid.ColumnDefinitions>
+
+                                    <TextBlock Grid.Column="0" Text="Круасан з шоколадом 90г" FontSize="16" FontWeight="SemiBold" Foreground="#333333" VerticalAlignment="Center" Margin="15,0,0,0"/>
+                                    <TextBlock Grid.Column="1" Text="135646" FontSize="16" FontWeight="SemiBold" Foreground="#FF8D8D8D" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                                    <TextBlock Grid.Column="2" Text="1" FontSize="16" FontWeight="SemiBold" Foreground="#333333" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                                    <TextBlock Grid.Column="3" Text="31.00 грн" FontSize="16" FontWeight="SemiBold" Foreground="#FF8D8D8D" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                                    <TextBlock Grid.Column="4" Text="31.00 грн" FontSize="16" FontWeight="Bold" Foreground="#673AB7" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                                    <Border Grid.Column="5" Width="130" Height="38" CornerRadius="8" Background="#FFF38B8B" VerticalAlignment="Center" HorizontalAlignment="Center">
+                                        <Button Content="Видалити" Height="38" Background="Transparent" Foreground="#FF861717" FontSize="16" FontWeight="Bold" BorderBrush="Transparent" VerticalContentAlignment="Center"/>
+                                    </Border>
+                                </Grid>
+                            </Border>
+                        </StackPanel>-->
+                    </Grid>
+                </Border>
+
+
+                <Border Grid.Row="1" Background="#FFE7DEF0" Margin="20,0,0,20" CornerRadius="0,0,0,20" Padding="15,0">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="150" />
+                            <ColumnDefinition Width="150" />
+                            <ColumnDefinition Width="180" />
+                        </Grid.ColumnDefinitions>
+
+                        <TextBlock Grid.Column="0" Text="Разом:" FontSize="22" FontWeight="Bold" Foreground="#4A148C" VerticalAlignment="Center" Margin="10,0,0,0"/>
+                        <TextBlock x:Name="TotalSumTextBlock" Grid.Column="3" Text="00.00 грн" FontSize="24" FontWeight="Bold" Foreground="#673AB7" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                    </Grid>
+                </Border>
+            </Grid>
+
+
+
+
+
+
+            <Grid x:Name="PayConfirm" Background="#99483554" Visibility="Collapsed" Grid.ColumnSpan="2" Panel.ZIndex="100" Margin="0,-97,0,0">
+                <Border Width="582" Height="383" Background="White" CornerRadius="20" VerticalAlignment="Center" HorizontalAlignment="Center" Padding="25">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="70"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="60"/>
+                        </Grid.RowDefinitions>
+
+                        <TextBlock Grid.Row="0" Text="Закриття чека" FontSize="20" FontWeight="Bold" Foreground="#4A148C" HorizontalAlignment="Left"/>
+                        <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,30,0,170" Grid.RowSpan="2">
+                            <Button x:Name="CashButton" Content="Готівка" Width="240" Height="42" Background="#FF7CAC48" Foreground="#FF2B5004" FontSize="18" FontWeight="Bold" Margin="0,0,15,0" BorderBrush="{x:Null}" Click="CashButton_Click"/>
+                            <Button x:Name="CardButton" Content="Карта" Width="240" Height="42" Background="#FFE4E4F0" Foreground="#FF666666" FontSize="18" FontWeight="Bold" BorderBrush="{x:Null}" Click="CardButton_Click"/>
+                        </StackPanel>
+                        <Grid Grid.Row="2" Margin="0,30,0,0">
+                            <StackPanel VerticalAlignment="Top" HorizontalAlignment="Left">
+                                <TextBlock FontSize="18" Foreground="#333333" FontWeight="Bold" Margin="0,8,0,0">
+                        <Run Language="uk-ua" Text="Сума чеку:"/>
+                                </TextBlock>
+                                <TextBlock FontSize="18" Foreground="#333333" FontWeight="Bold" Margin="0,22,0,0">
+                        <Run Text="Сума "/><Run Language="uk-ua" Text="клієнта"/><Run Text=":"/>
+                                </TextBlock>
+                                <TextBlock FontSize="18" Foreground="#333333" FontWeight="Bold" Margin="0,22,0,0">
+                        <Run Text="Решта"/><Run Language="uk-ua" Text=":"/>
+                                </TextBlock>
+                            </StackPanel>
+
+                            <StackPanel VerticalAlignment="Top" HorizontalAlignment="Right" Width="211" Margin="0,0,16,0">
+
+                                <Border Width="211" Height="35" CornerRadius="5" Background="#FFF2ECF6" Margin="0,0,0,10">
+                                    <TextBlock x:Name="TotalOrderTextBlock" Text="135.00" FontSize="16" FontWeight="Bold" Foreground="#FFBAAED2" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                                </Border>
+                                <Border Width="211" Height="35" CornerRadius="5" Background="#FFECE4F0" Margin="0,0,0,10">
+                                    <TextBox x:Name="ClientAmountTextBox" TextWrapping="Wrap" Text="135.00" FontSize="16" FontWeight="Bold" Foreground="#FF584A75" VerticalAlignment="Center" HorizontalAlignment="Center" BorderBrush="{x:Null}" Background="Transparent" TextChanged="ClientAmountTextBox_TextChanged"/>
+                                </Border>
+                                <Border Width="211" Height="35" CornerRadius="5" Background="#FFECE4F0" Margin="0,0,0,0">
+                                    <TextBlock x:Name="ChangeTextBlock" Text="0.00" FontSize="16" FontWeight="Bold" Foreground="#FF584A75" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                                </Border>
+                            </StackPanel>
+                        </Grid>
+
+                        <StackPanel Grid.Row="3" Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,10,0,0">
+                            <Button Content="ОК" Width="170" Height="42" Background="#FF7848AC" Foreground="White" FontSize="18" FontWeight="Bold" Margin="0,0,15,0" BorderBrush="{x:Null}" Click="ConfirmPayment_Click"/>
+                            <Button Content="Скасувати" Width="170" Height="42" Background="#FFE4E4F0" Foreground="#333333" FontSize="18" FontWeight="Bold" BorderBrush="{x:Null}" Click="CancelPayment_Click"/>
+                        </StackPanel>
+                    </Grid>
+                </Border>
+            </Grid>
+
+            <Grid x:Name="VidachaPanel" Background="#99483554" Visibility="Collapsed" Grid.ColumnSpan="2" Panel.ZIndex="100" Margin="0,-97,0,0">
+                <Border Width="460" Height="235" Background="White" CornerRadius="20" VerticalAlignment="Center" HorizontalAlignment="Center" Padding="25">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition/>
+                            <RowDefinition Height="Auto" MinHeight="57"/>
+                        </Grid.RowDefinitions>
+                        <StackPanel Grid.Row="0" Orientation="Horizontal" Margin="0,0,0,15">
+                            <TextBlock Text="Касові операції" FontSize="20" FontWeight="Bold" Foreground="#4A148C" HorizontalAlignment="Left"/>
+                            <TextBlock Text="Службова видача" FontSize="18" FontWeight="Bold" Foreground="#FFA42A2A" HorizontalAlignment="Right" Margin="90,2,0,0" VerticalAlignment="Center"/>
+                        </StackPanel>
+                        <StackPanel Grid.Row="1" VerticalAlignment="Top" Margin="0,5,0,0" Height="85" Grid.RowSpan="2">
+                            <TextBlock FontSize="14" Foreground="#FF8D8D8D" TextAlignment="Left" TextWrapping="Wrap" Margin="0,0,0,5" Text="Вказана сума буде вирахована з каси"/>
+                            <TextBlock FontSize="16" Foreground="#333333" FontWeight="Bold" Margin="0,0,0,5" Text="Сума інкасації (грн):"/>
+                            <Border Background="#FFE7D4D1" Width="400" Height="35" CornerRadius="5" HorizontalAlignment="Left" Padding="5,0">
+                                <TextBox x:Name="VidachaAmountTextBox" TextWrapping="Wrap" Text="" FontSize="16" FontWeight="Bold" Foreground="#333333" VerticalAlignment="Center" Background="Transparent" BorderBrush="{x:Null}" VerticalContentAlignment="Center"/>
+                            </Border>
+                        </StackPanel>
+                        <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,15,0,0" Width="374">
+                            <Button Content="Так" Width="180" Height="42" Background="#FFAC4F48" Foreground="White" FontSize="18" FontWeight="Bold" Margin="0,0,15,0" BorderBrush="{x:Null}" Click="ConfirmVidacha_Click"/>
+                            <Button Content="Ні" Width="180" Height="42" Background="#FFE4E4F0" Foreground="#333333" FontSize="18" FontWeight="Bold" BorderBrush="{x:Null}" Click="CancelVidacha_Click"/>
+                        </StackPanel>
+                    </Grid>
+                </Border>
+            </Grid>
+
+            <Grid x:Name="VnesennyaPanel" Background="#99483554" Visibility="Collapsed" Grid.ColumnSpan="2" Panel.ZIndex="100" Margin="0,-97,0,0">
+                <Border Width="460" Height="235" Background="White" CornerRadius="20" VerticalAlignment="Center" HorizontalAlignment="Center" Padding="25">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+                        <StackPanel Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Stretch" Margin="0,0,0,15">
+                            <TextBlock Text="Касові операції" FontSize="20" FontWeight="Bold" Foreground="#4A148C" HorizontalAlignment="Left"/>
+                            <TextBlock Text="Службове внесення" FontSize="18" FontWeight="Bold" Foreground="#FF2B5004" HorizontalAlignment="Right" Margin="80,2,0,0"/>
+                        </StackPanel>
+                        <StackPanel Grid.Row="1" VerticalAlignment="Top" Margin="0,5,0,0">
+                            <TextBlock FontSize="14" Foreground="#FF8D8D8D" TextAlignment="Left" TextWrapping="Wrap" Margin="0,0,0,5" Text="Вказана сума буде додана до каси"/>
+                            <TextBlock FontSize="16" Foreground="#333333" FontWeight="Bold" Margin="0,0,0,5" Text="Сума внесення (грн):"/>
+                            <Border Background="#FFD1E7DD" Width="400" Height="35" CornerRadius="5" HorizontalAlignment="Left" Padding="5,0">
+                                <TextBox x:Name="VnesennyaAmountTextBox" TextWrapping="Wrap" Text="" FontSize="16" FontWeight="Bold" Foreground="#333333" VerticalAlignment="Center" Background="Transparent" BorderBrush="{x:Null}" VerticalContentAlignment="Center"/>
+                            </Border>
+                        </StackPanel>
+                        <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,15,0,0">
+                            <Button Content="Так" Width="180" Height="42" Background="#FF7CAC48" Foreground="White" FontSize="18" FontWeight="Bold" Margin="0,0,15,0" BorderBrush="{x:Null}" Click="ConfirmVnesennya_Click"/>
+                            <Button Content="Ні" Width="180" Height="42" Background="#FFE4E4F0" Foreground="#333333" FontSize="18" FontWeight="Bold" BorderBrush="{x:Null}" Click="CancelVnesennya_Click"/>
+                        </StackPanel>
+                    </Grid>
+                </Border>
+            </Grid>
+
+
+            <Grid x:Name="kasaKoshti" Background="#99483554" Visibility="Collapsed" Grid.ColumnSpan="2" Panel.ZIndex="100" Margin="0,-97,0,0">
+                <Border Width="460" Height="340" Background="White" CornerRadius="20" VerticalAlignment="Center" HorizontalAlignment="Center" Padding="25">
+                    <Grid Margin="0,-10,0,0">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+                        <TextBlock Grid.Row="0" Text="Кошти в касі" FontSize="22" FontWeight="Bold" Foreground="#4A148C" HorizontalAlignment="Center" Margin="0,0,0,15"/>
+                        <Grid Grid.Row="1" Margin="0,5,0,0">
+                            <StackPanel VerticalAlignment="Top" HorizontalAlignment="Left" Height="194">
+                                <TextBlock FontSize="16" Foreground="#333333" FontWeight="SemiBold" Margin="0,0,0,12" Text="Сума службового внесення"/>
+                                <TextBlock FontSize="16" Foreground="#333333" FontWeight="SemiBold" Margin="0,0,0,12" Text="Сума службової видачі"/>
+                                <TextBlock FontSize="16" Foreground="#333333" FontWeight="SemiBold" Margin="0,0,0,12" Text="Сума оплат (готівка)"/>
+                                <TextBlock FontSize="16" Foreground="#333333" FontWeight="SemiBold" Margin="0,0,0,16" Text="Сума оплат (безготівка)"/>
+                                <TextBlock FontSize="18" Foreground="#4A148C" FontWeight="Bold" Margin="0,30,0,0" Text="Сума готівки в касі"/>
+                            </StackPanel>
+
+                            <StackPanel VerticalAlignment="Top" HorizontalAlignment="Right" Margin="0,0,5,0" Height="194">
+                                <TextBlock x:Name="VnesennyaSumText" FontSize="16" Foreground="#333333" FontWeight="Bold" HorizontalAlignment="Right" Margin="0,0,0,12" Text="0.00"/>
+                                <TextBlock x:Name="VidachaSumText" FontSize="16" Foreground="#333333" FontWeight="Bold" HorizontalAlignment="Right" Margin="0,0,0,12" Text="0.00"/>
+                                <TextBlock x:Name="CashSalesSumText" FontSize="16" Foreground="#333333" FontWeight="Bold" HorizontalAlignment="Right" Margin="0,0,0,12" Text="0.00"/>
+                                <TextBlock x:Name="CardSalesSumText" FontSize="16" Foreground="#333333" FontWeight="Bold" HorizontalAlignment="Right" Margin="0,0,0,16" Text="0.00"/>
+
+                                <TextBlock x:Name="TotalCashInBoxText" FontSize="18" Foreground="#4A148C" FontWeight="Bold" HorizontalAlignment="Right" Margin="0,30,0,0" Text="0.00"/>
+                            </StackPanel>
+                        </Grid>
+                        <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,15,0,0">
+                            <Button Content="Закрити" Width="284" Height="32" Background="#FF7848AC" Foreground="White" FontSize="18" FontWeight="Bold" BorderBrush="{x:Null}" Click="CloseKasaKoshti_Click"/>
+                        </StackPanel>
+                    </Grid>
+                </Border>
+            </Grid>
+
+
+            <Grid x:Name="PopupZConfirm" Background="#99483554" Visibility="Collapsed" Grid.ColumnSpan="2" Panel.ZIndex="100" Margin="0,-97,0,0">
+                <Border Width="460" Height="172" Background="White" CornerRadius="20" VerticalAlignment="Center" HorizontalAlignment="Center" Padding="25">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+                        <TextBlock Grid.Row="0" Text="Закриття зміни" FontSize="20" FontWeight="Bold" Foreground="#4A148C" HorizontalAlignment="Center"/>
+                        <TextBlock Grid.Row="1" Text="Ви впевнені, що хочете закрити зміну?" FontSize="18" Foreground="#333333" VerticalAlignment="Top" HorizontalAlignment="Center" TextAlignment="Center" TextWrapping="Wrap" Margin="0,10,0,0"/>
+                        <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Center">
+                            <Button Content="Так" Width="130" Height="45" Background="#FF7848AC" Foreground="White" FontSize="18" FontWeight="Bold" Margin="0,0,15,0" BorderBrush="{x:Null}" Click="ConfirmCloseShift_Click"/>
+                            <Button Content="Ні" Width="130" Height="45" Background="#FFE4E4F0" Foreground="#333333" FontSize="18" FontWeight="Bold" BorderBrush="{x:Null}" Click="CancelCloseShift_Click"/>
+                        </StackPanel>
+                    </Grid>
+                </Border>
+            </Grid>
+
+            <Grid x:Name="ZPaperSuma" Background="#99483554" Visibility="Collapsed" Grid.ColumnSpan="2" Panel.ZIndex="100" Margin="0,-97,0,0">
+                <Border Width="460" Height="554" Background="White" CornerRadius="20" VerticalAlignment="Center" HorizontalAlignment="Center" Padding="25">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+
+                        <TextBlock Text="Z-звіт" Grid.Row="0" HorizontalAlignment="Center" FontSize="20" FontWeight="Bold" Foreground="#4A148C"/>
+
+                        <TextBlock Grid.Row="1" Text="Касир 1" FontSize="18" Foreground="#333333" VerticalAlignment="Top" HorizontalAlignment="Left" TextAlignment="Center" TextWrapping="Wrap" Margin="21,28,0,0"/>
+
+                        <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Center">
+                            <Button Content="Закрити зміну" Width="243" Height="45" Background="#FF7848AC" Foreground="White" FontSize="18" FontWeight="Bold" BorderBrush="{x:Null}" Click="Close_Click"/>
+                        </StackPanel>
+
+                        <TextBlock Grid.Row="1" Text="-------------------------------------------------------" FontSize="18" Foreground="#333333" VerticalAlignment="Top" HorizontalAlignment="Center" TextAlignment="Center" TextWrapping="Wrap" Margin="0,52,0,0"/>
+                        <TextBlock Grid.Row="1" Text="-------------------------------------------------------" FontSize="18" Foreground="#333333" VerticalAlignment="Top" HorizontalAlignment="Left" TextAlignment="Center" TextWrapping="Wrap" Margin="4,0,0,0"/>
+
+                        <TextBlock x:Name="ZChecksText" Grid.Row="1" Text="0" FontSize="18" Foreground="#333333" VerticalAlignment="Top" HorizontalAlignment="Right" TextAlignment="Center" TextWrapping="Wrap" Margin="0,81,19,0" FontWeight="Bold"/>
+                        <TextBlock Grid.Row="1" Text="Кількість чеків" FontSize="18" Foreground="#333333" VerticalAlignment="Top" HorizontalAlignment="Left" TextAlignment="Center" TextWrapping="Wrap" Margin="21,81,0,0" FontWeight="Bold"/>
+
+                        <TextBlock x:Name="ZCashText" Grid.Row="1" Text="0.00" FontSize="18" Foreground="#333333" VerticalAlignment="Top" HorizontalAlignment="Right" TextAlignment="Center" TextWrapping="Wrap" Margin="0,116,19,0"/>
+                        <TextBlock Grid.Row="1" Text="Оплата готівкою" FontSize="18" Foreground="#333333" VerticalAlignment="Top" HorizontalAlignment="Left" TextAlignment="Center" TextWrapping="Wrap" Margin="21,116,0,0"/>
+
+                        <TextBlock x:Name="ZCardText" Grid.Row="1" Text="0.00" FontSize="18" Foreground="#333333" VerticalAlignment="Top" HorizontalAlignment="Right" TextAlignment="Center" TextWrapping="Wrap" Margin="0,153,19,0"/>
+                        <TextBlock Grid.Row="1" Text="Оплата картою" FontSize="18" Foreground="#333333" VerticalAlignment="Top" HorizontalAlignment="Left" TextAlignment="Center" TextWrapping="Wrap" Margin="21,153,0,0"/>
+
+                        <TextBlock Grid.Row="1" Text="-------------------------------------------------------" FontSize="18" Foreground="#333333" VerticalAlignment="Top" HorizontalAlignment="Left" TextAlignment="Center" TextWrapping="Wrap" Margin="10,177,0,0"/>
+
+                        <TextBlock x:Name="ZVnesennyaText" Grid.Row="1" Text="0.00" FontSize="18" Foreground="#333333" VerticalAlignment="Top" HorizontalAlignment="Right" TextAlignment="Center" TextWrapping="Wrap" Margin="0,206,19,0"/>
+                        <TextBlock Grid.Row="1" Text="Службове внесення" FontSize="18" Foreground="#333333" VerticalAlignment="Top" HorizontalAlignment="Left" TextAlignment="Center" TextWrapping="Wrap" Margin="21,206,0,0"/>
+
+                        <TextBlock x:Name="ZVidachaText" Grid.Row="1" Text="0.00" FontSize="18" Foreground="#333333" VerticalAlignment="Top" HorizontalAlignment="Right" TextAlignment="Center" TextWrapping="Wrap" Margin="0,240,19,0"/>
+                        <TextBlock Grid.Row="1" Text="Службова видача" FontSize="18" Foreground="#333333" VerticalAlignment="Top" HorizontalAlignment="Left" TextAlignment="Center" TextWrapping="Wrap" Margin="21,240,0,0"/>
+
+                        <TextBlock Grid.Row="1" Text="-------------------------------------------------------" FontSize="18" Foreground="#333333" VerticalAlignment="Top" HorizontalAlignment="Center" TextAlignment="Center" TextWrapping="Wrap" Margin="0,269,0,0"/>
+
+                        <TextBlock Grid.Row="1" Text="0" FontSize="18" Foreground="#333333" VerticalAlignment="Top" HorizontalAlignment="Right" TextAlignment="Center" TextWrapping="Wrap" Margin="0,298,19,0"/>
+                        <TextBlock Grid.Row="1" Text="Подарункові сертифікати" FontSize="18" Foreground="#333333" VerticalAlignment="Top" HorizontalAlignment="Left" TextAlignment="Center" TextWrapping="Wrap" Margin="21,298,0,0"/>
+
+                        <TextBlock Grid.Row="1" Text="0" FontSize="18" Foreground="#333333" VerticalAlignment="Top" HorizontalAlignment="Right" TextAlignment="Center" TextWrapping="Wrap" Margin="0,337,19,0"/>
+                        <TextBlock Grid.Row="1" Text="Бонусні" FontSize="18" Foreground="#333333" VerticalAlignment="Top" HorizontalAlignment="Left" TextAlignment="Center" TextWrapping="Wrap" Margin="21,337,0,0"/>
+
+                        <TextBlock Grid.Row="1" Text="-------------------------------------------------------" FontSize="18" Foreground="#333333" VerticalAlignment="Top" HorizontalAlignment="Center" TextAlignment="Center" TextWrapping="Wrap" Margin="0,361,0,0"/>
+                    </Grid>
+                </Border>
+            </Grid>
+
+
+
+            <Border Grid.Row="0" Grid.Column="1" Background="#FFCFBFE2" Margin="0,20,20,20" CornerRadius="0,20,20,0">
+                <Grid>
+                    <StackPanel x:Name="DefaultMenuPanel"  Visibility="Visible" VerticalAlignment="Top" Margin="0,50,0,20" HorizontalAlignment="Center">
+                        <Border Width="260" Height="58" Margin="0,0,0,20" CornerRadius="8" Background="#FFA880C6">
+                            <Button Content="СКЛАД" Height="58" Width="260" Background="Transparent" Foreground="#FF4E1C67" FontSize="22" FontWeight="Bold" BorderBrush="{x:Null}" Click="StorageButton"/>
+                        </Border>
+
+                        <Border Width="260" Height="58" Margin="0,0,0,20" CornerRadius="8" Background="#FFA880C6">
+                            <Button Content="ІСТОРІЯ" Height="58" Width="260" Background="Transparent" Foreground="#FF4E1C67" FontSize="22" FontWeight="Bold" BorderBrush="{x:Null}" Click="HistoryButton"/>
+                        </Border>
+
+                        <Border Width="260" Height="58" Margin="0,0,0,20" CornerRadius="8" Background="#FFA880C6">
+                            <Button Content="ЗАМОВЛЕННЯ" Height="58" Width="260" Background="Transparent" Foreground="#FF4E1C67" FontSize="22" FontWeight="Bold" BorderBrush="{x:Null}" Click="OrderButton"/>
+                        </Border>
+
+                        <Border Width="260" Height="58" Margin="0,0,0,20" CornerRadius="8" Background="#FF7848AC">
+                            <Button Content="ПРОДАЖ" Height="58" Width="260" Background="Transparent" Foreground="White" FontSize="22" FontWeight="Bold" BorderBrush="Transparent"/>
+                        </Border>
+                    </StackPanel>
+
+
+                    <StackPanel x:Name="KasaSubMenuPanel" VerticalAlignment="Top" Margin="0,50,0,20" HorizontalAlignment="Center" Visibility="Collapsed">
+                        <Border Width="260" Height="45" Margin="0,0,0,20" CornerRadius="8" Background="#FFC1A3D7">
+                            <TextBlock Text="Зміна: Відкрита" x:Name="statusButton" Height="25" Width="150" Background="Transparent" Foreground="#FF70318F" FontSize="18" FontWeight="Bold" FontStyle="Italic" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                        <Border Width="260" Height="58" Margin="0,0,0,20" CornerRadius="8" Background="#FFA880C6">
+                            <Button Content="Нульовий чек" Height="58" Width="260" Background="Transparent" Foreground="#FF4E1C67" FontSize="22" FontWeight="Bold" BorderBrush="{x:Null}" Click="OpenShift_Click"/>
+                        </Border>
+
+                        <Border Width="260" Height="58" Margin="0,0,0,20" CornerRadius="8" Background="#FFA880C6">
+                            <Button Content="Z -звіт" x:Name="ZReportButton" Height="58" Width="260" Background="Transparent" Foreground="#FF4E1C67" FontSize="22" FontWeight="Bold" BorderBrush="{x:Null}" Click="CloseShift_Click"/>
+                        </Border>
+
+                        <Border Width="260" Height="58" Margin="0,0,0,20" CornerRadius="8" Background="#FFA880C6">
+                            <Button Content="Службове внесення" Height="58" Width="260" Background="Transparent" Foreground="#FF4E1C67" FontSize="22" FontWeight="Bold" BorderBrush="{x:Null}" Click="OpenVnesennya_Click"/>
+                        </Border>
+                        <Border Width="260" Height="58" Margin="0,0,0,20" CornerRadius="8" Background="#FFA880C6">
+                            <Button Content="Службова видача" Height="58" Width="260" Background="Transparent" Foreground="#FF4E1C67" FontSize="22" FontWeight="Bold" BorderBrush="{x:Null}" Click="OpenVidacha_Click"/>
+                        </Border>
+
+                        <Border Width="260" Height="58" Margin="0,0,0,20" CornerRadius="8" Background="#FFA880C6">
+                            <Button Content="Кошти" Height="58" Width="260" Background="Transparent" Foreground="#FF4E1C67" FontSize="22" FontWeight="Bold" BorderBrush="{x:Null}" Click="koshtiOpen"/>
+                        </Border>
+
+                        <Border Width="260" Height="58" Margin="0,0,0,20" CornerRadius="8" Background="#FF7848AC">
+                            <Button Content="&lt;---------------" Height="58" Width="260" Background="Transparent" Foreground="White" FontSize="22" FontWeight="Bold" BorderBrush="{x:Null}" Click="BackToMain_Click"/>
+                        </Border>
+                    </StackPanel>
+
+                    <StackPanel x:Name="BottomKasaPanel" VerticalAlignment="Bottom" Margin="0,0,0,50" HorizontalAlignment="Center">
+                        <Border x:Name="KasaButtonBorder" Width="260" Height="58" Margin="0,0,0,20" CornerRadius="8" Background="#FFA280C6">
+                            <Button Content="КАСА" Height="58" Width="260" Background="Transparent" Foreground="#FF4E1C67" FontSize="22" FontWeight="Bold" BorderBrush="{x:Null}" Click="KasaButton_Click"/>
+                        </Border>
+                        <Button Content="ОПЛАТА" Height="75" Width="260" Background="#FF60A05A" Foreground="#FF19420D" FontSize="24" FontWeight="Bold" Click="PaymentButton_Click"/>
+                    </StackPanel>
+                </Grid>
+            </Border>
+        </Grid>
+    </DockPanel>
+</Window>

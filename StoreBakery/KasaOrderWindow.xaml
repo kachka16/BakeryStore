@@ -1,0 +1,220 @@
+﻿<Window x:Class="StoreBakery.KasaOrderWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:StoreBakery"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        mc:Ignorable="d"
+        Title="Замовлення" Height="1200" Width="1920" WindowState="Maximized">
+
+    <DockPanel LastChildFill="True">
+        <Border DockPanel.Dock="Top" Background="#FF6B21A8" Height="80" Padding="20,0">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+
+                <Border Grid.Column="2" CornerRadius="10" Background="#FFDEC7FF" VerticalAlignment="Center" Height="50" Padding="25,0" Margin="0,0,15,0">
+                    <TextBlock Text="Касир 1" VerticalAlignment="Center" FontSize="18" FontWeight="Bold" FontFamily="Cooper Black" Foreground="#FF7848AC"/>
+                </Border>
+
+                <Border Grid.Column="3" CornerRadius="10" Background="#FFB17AFF" VerticalAlignment="Center" Height="50">
+                    <Button Content="Вийти" Click="exitKasa" Width="150" Height="50" FontSize="18" FontWeight="Bold" FontFamily="Cooper Black" Foreground="#FF623198" Background="Transparent" BorderBrush="Transparent"/>
+                </Border>
+            </Grid>
+        </Border>
+
+        <Grid Background="#FF8D86B1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="350" />
+            </Grid.ColumnDefinitions>
+
+            <Grid Grid.Column="0" Margin="0,0,0,20">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+
+                <Border Grid.Row="0" Background="White" Margin="20,20,0,0" CornerRadius="20,0,0,0" ClipToBounds="True">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="50"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+
+                        <Border Grid.Row="0" Background="#FFEAE0F1" CornerRadius="20,0,0,0">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="166"/>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition Width="180"/>
+                                    <ColumnDefinition Width="141"/>
+                                    <ColumnDefinition Width="141"/>
+                                    <ColumnDefinition Width="198"/>
+                                </Grid.ColumnDefinitions>
+
+                                <TextBlock Grid.Column="0" Text="№ Чеку" FontWeight="Bold" FontSize="16" Foreground="#4A148C" VerticalAlignment="Center" Margin="27,0,0,0" Height="22"/>
+                                <TextBlock Grid.Column="1" Text="Деталі замовлення" FontWeight="Bold" FontSize="16" Foreground="#4A148C" VerticalAlignment="Center" Margin="240,0,225,0" Height="22"/>
+                                <TextBlock Grid.Column="2" Text="Час/Дата" FontWeight="Bold" FontSize="16" Foreground="#4A148C" VerticalAlignment="Center" HorizontalAlignment="Center" Height="22" Width="72"/>
+                                <TextBlock Grid.Column="3" Text="Статус" FontWeight="Bold" FontSize="16" Foreground="#4A148C" VerticalAlignment="Center" HorizontalAlignment="Center" Height="22" Width="70"/>
+                                <TextBlock Grid.Column="4" Text="Сума" FontWeight="Bold" FontSize="16" Foreground="#4A148C" VerticalAlignment="Center" HorizontalAlignment="Center" Height="22" Width="40"/>
+                                <TextBlock Grid.Column="5" Text="" FontWeight="Bold" FontSize="16" Foreground="#4A148C" VerticalAlignment="Center" HorizontalAlignment="Center" Height="22" Width="0"/>
+                            </Grid>
+                        </Border>
+
+                        <ListView x:Name="OrdersListView" ItemsSource="{Binding OrdersList}" Grid.Row="1" Margin="15,10,15,0" Background="Transparent" BorderBrush="{x:Null}">
+                            <ListView.ItemContainerStyle>
+                                <Style TargetType="ListViewItem">
+                                    <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                                    <Setter Property="Background" Value="Transparent"/>
+                                    <Setter Property="Template">
+                                        <Setter.Value>
+                                            <ControlTemplate TargetType="ListViewItem">
+                                                <Border Background="#FFE4E4F0" CornerRadius="12" Padding="0,8" Height="60" Margin="0,0,0,10">
+                                                    <ContentPresenter/>
+                                                </Border>
+                                            </ControlTemplate>
+                                        </Setter.Value>
+                                    </Setter>
+                                </Style>
+                            </ListView.ItemContainerStyle>
+                            <ListView.ItemTemplate>
+                                <DataTemplate>
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="150"/>
+                                            <ColumnDefinition/>
+                                            <ColumnDefinition Width="180"/>
+                                            <ColumnDefinition Width="158"/>
+                                            <ColumnDefinition Width="140"/>
+                                            <ColumnDefinition Width="180"/>
+                                        </Grid.ColumnDefinitions>
+
+                                        <TextBlock Grid.Column="0" Text="{Binding OrderNumber}" FontSize="16" FontWeight="SemiBold" Foreground="#FF917BBB" VerticalAlignment="Center" Margin="15,0,0,0"/>
+                                        <TextBlock Grid.Column="1" Text="{Binding ProductsText}" FontSize="16" FontWeight="Bold" Foreground="#FF4A148C" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="15,0,0,0"/>
+                                        <TextBlock Grid.Column="2" Text="{Binding OrderTime}" FontSize="16" FontWeight="SemiBold" Foreground="#FF4D2F87" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+
+                                        <Border Grid.Column="3" Width="110" Height="30" CornerRadius="8" Background="#FFFAE3AF" VerticalAlignment="Center" HorizontalAlignment="Center">
+                                            <TextBlock Text="{Binding Status}" FontSize="14" FontWeight="Bold" Foreground="#FFB77837" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                                        </Border>
+
+                                        <TextBlock Grid.Column="4" Text="{Binding TotalAmount, StringFormat={}{0:F2} грн}" FontSize="16" FontWeight="Bold" Foreground="#673AB7" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+
+                                        <Border Grid.Column="5" Width="160" Height="38" CornerRadius="8" Background="#FFDEC7FF" VerticalAlignment="Center" HorizontalAlignment="Center">
+                                            <Button Content="Змінити статус" Height="38" Background="Transparent" Foreground="#FF7848AC" FontSize="16" FontWeight="Bold" BorderBrush="Transparent" Click="ChangeStatus_Click"/>
+                                        </Border>
+                                    </Grid>
+                                </DataTemplate>
+                            </ListView.ItemTemplate>
+                        </ListView>
+                    </Grid>
+                </Border>
+            </Grid>
+
+            <Border Grid.Row="0" Grid.Column="1" Background="#FFCFBFE2" Margin="0,20,20,20" CornerRadius="0,20,20,0">
+                <Grid>
+                    <StackPanel VerticalAlignment="Top" Margin="0,50,0,20" HorizontalAlignment="Center">
+                        <Border Width="260" Height="58" Margin="0,0,0,20" CornerRadius="8" Background="#FFA880C6">
+                            <Button Content="СКЛАД" Height="58" Width="260" Background="Transparent" Foreground="#FF4E1C67" FontSize="22" FontWeight="Bold" BorderBrush="{x:Null}" Click="StorageButton"/>
+                        </Border>
+
+                        <Border Width="260" Height="58" Margin="0,0,0,20" CornerRadius="8" Background="#FFA880C6">
+                            <Button Content="ІСТОРІЯ" Height="58" Width="260" Background="Transparent" Foreground="#FF4E1C67" FontSize="22" FontWeight="Bold" BorderBrush="{x:Null}" Click="HistoryButton"/>
+                        </Border>
+
+                        <Border Width="260" Height="58" Margin="0,0,0,20" CornerRadius="8" Background="#FF7848AC">
+                            <Button Content="ЗАМОВЛЕННЯ" Height="58" Width="260" Background="Transparent" Foreground="White" FontSize="22" FontWeight="Bold" BorderBrush="{x:Null}"/>
+                        </Border>
+
+                        <Border Width="260" Height="58" Margin="0,0,0,20" CornerRadius="8" Background="#FFA880C6">
+                            <Button Content="ПРОДАЖ" Height="58" Width="260" Background="Transparent" Foreground="#FF4E1C67" FontSize="22" FontWeight="Bold" BorderBrush="Transparent" Click="SaleButton"/>
+                        </Border>
+                    </StackPanel>
+                </Grid>
+            </Border>
+
+            <Grid x:Name="StatusPopup" Background="#99483554" Visibility="Collapsed" Grid.ColumnSpan="2" Panel.ZIndex="100">
+                <Border Width="460" MaxHeight="660" Background="White" CornerRadius="20" Padding="25" VerticalAlignment="Center" HorizontalAlignment="Center">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+
+                        <StackPanel Grid.Row="0">
+                            <TextBlock Text="Деталі чеку" FontSize="20" FontWeight="Bold" Foreground="#4A148C" HorizontalAlignment="Center"/>
+                            <TextBlock x:Name="PopupOrderNumberText" FontSize="16" FontWeight="SemiBold" Foreground="#333333" HorizontalAlignment="Center" Margin="0,8,0,0"/>
+                            <TextBlock x:Name="PopupOrderTimeText" FontSize="16" Foreground="#333333" HorizontalAlignment="Center"/>
+                            <TextBlock Text="-------------------------------------------------------" FontSize="16" Foreground="#333333" HorizontalAlignment="Center" Margin="0,10,0,10"/>
+                        </StackPanel>
+
+                        <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto">
+                            <ItemsControl x:Name="PopupItemsControl">
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate>
+                                        <StackPanel Margin="0,0,0,10">
+                                            <TextBlock Text="{Binding Name}" FontSize="16" FontWeight="Bold" Foreground="#4A148C" TextWrapping="Wrap"/>
+                                            <Grid>
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="*"/>
+                                                    <ColumnDefinition Width="Auto"/>
+                                                </Grid.ColumnDefinitions>
+                                                <TextBlock Grid.Column="0" Text="{Binding Details}" FontSize="15" Foreground="#333333"/>
+                                                <TextBlock Grid.Column="1" Text="{Binding Sum}" FontSize="15" FontWeight="Bold" Foreground="#333333"/>
+                                            </Grid>
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                            </ItemsControl>
+                        </ScrollViewer>
+
+                        <StackPanel Grid.Row="2">
+                            <TextBlock Text="-------------------------------------------------------" FontSize="16" Foreground="#333333" HorizontalAlignment="Center" Margin="0,0,0,10"/>
+
+                            <Grid Margin="0,0,0,6">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Text="Оплата" FontSize="16" Foreground="#333333"/>
+                                <TextBlock x:Name="PopupPaymentText" Grid.Column="1" FontSize="16" FontWeight="SemiBold" Foreground="#333333"/>
+                            </Grid>
+
+                            <Grid Margin="0,0,0,6">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Text="Статус" FontSize="16" Foreground="#333333"/>
+                                <TextBlock x:Name="PopupStatusText" Grid.Column="1" FontSize="16" FontWeight="SemiBold" Foreground="#333333"/>
+                            </Grid>
+
+                            <Grid Margin="0,0,0,6">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Text="ВСЬОГО" FontSize="18" FontWeight="Bold" Foreground="#4A148C"/>
+                                <TextBlock x:Name="PopupTotalText" Grid.Column="1" FontSize="18" FontWeight="Bold" Foreground="#4A148C"/>
+                            </Grid>
+
+                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,20,0,0">
+                                <Button x:Name="CompleteOrderButton" Content="Завершити" Width="200" Height="45" Margin="0,0,15,0"
+                                         Background="#FFAC4F48" Foreground="White" FontSize="18" FontWeight="Bold" BorderBrush="{x:Null}"
+                                        Click="CompleteOrder_Click"/>
+                                <Button Content="Вийти" Width="200" Height="45"
+                                        Background="#FFC7A2E2" Foreground="#FF4E1C67" FontSize="18" FontWeight="Bold" BorderBrush="{x:Null}"
+                                        Click="ClosePopup_Click"/>
+                            </StackPanel>
+                        </StackPanel>
+                    </Grid>
+                </Border>
+            </Grid>
+        </Grid>
+    </DockPanel>
+</Window>

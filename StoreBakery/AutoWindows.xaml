@@ -1,0 +1,40 @@
+﻿<Window x:Class="StoreBakery.AutoWindows"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:StoreBakery"
+        mc:Ignorable="d"
+        Title="AutoWindows" Height="1080" Width="1920" WindowState="Maximized">
+    <Grid Background="#C2BBD5">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+        <StackPanel Grid.ColumnSpan="2" Margin="0,150,0,0">
+            <TextBlock x:Name="choseRole" Text="ОБЕРІТЬ РОЛЬ" HorizontalAlignment="Center" FontSize="48" FontWeight="Bold" Foreground="#FF60479A" Margin="0,10,0,0" FontFamily="Arial Black" Width="405"/>
+            <TextBlock Text="Взалежності від ролі вам буде відкрито певні функції" HorizontalAlignment="Center" FontWeight="Bold" Foreground="#FF7A61B5" Margin="0" FontFamily="Trebuchet MS" FontSize="24"/>
+        </StackPanel>
+        <Border  Grid.Column="0" MouseLeftButtonUp="KasaLog" Cursor="Hand" Width="400" Height="300" Background="White" Margin="300,30,50,10" CornerRadius="45">
+            <Border.Effect>
+                <DropShadowEffect Color="#FFBD96EF" Direction="320" ShadowDepth="0" Opacity="0.5" BlurRadius="25"/>
+            </Border.Effect>
+
+            <StackPanel>
+                <TextBlock Text="Касир" Foreground="#FF60479A" FontWeight="Bold" FontSize="36" HorizontalAlignment="Center" FontFamily="Gill Sans Ultra Bold Condensed" Margin="0,20,0,0"/>
+                <TextBlock Text="Оформлення, коригування та зміна статусів замовлень, друк чеків, пошук товарів за фільтрами та перегляд історії здійснених продажів" Foreground="#FF9079C5" TextAlignment="Center" FontWeight="Bold" Width="392" Height="196" TextWrapping="Wrap" FontSize="24" Padding="0,0,0,20" Margin="0,20,0,0"/>
+            </StackPanel>
+        </Border>
+
+        <Border MouseLeftButtonUp="AdminLog" Cursor="Hand" Grid.Column="1" Width="400" Height="299" Background="White" Margin="50,30,300,10" CornerRadius="45">
+            <Border.Effect>
+                <DropShadowEffect Color="#FFBD96EF" Direction="320" ShadowDepth="0" Opacity="0.5" BlurRadius="25"/>
+            </Border.Effect>
+
+            <StackPanel>
+                <TextBlock Text="Адміністратор" Foreground="#FF60479A" FontWeight="Bold" FontSize="36" HorizontalAlignment="Center" FontFamily="Gill Sans Ultra Bold Condensed" Margin="0,20,0,0"/>
+                <TextBlock Text="Управління асортиментом, цінами та залишками продукції, контроль статистики продажів і налаштування прав доступу касиріву касирів" Foreground="#FF9079C5" TextAlignment="Center" FontWeight="Bold" Width="398" Height="197" TextWrapping="Wrap" FontSize="24" Padding="0,0,0,20" Margin="0,20,0,0"/>
+            </StackPanel>
+        </Border>
+    </Grid>
+</Window>
