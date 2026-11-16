@@ -9,7 +9,7 @@ namespace StoreBakery
 
         public ApplicationContext() : base("DefaultConnection")
         {
-            Database.SetInitializer(new CreateDatabaseIfNotExists<ApplicationContext>());
+            Database.SetInitializer<ApplicationContext>(null);
         }
     }
 }
