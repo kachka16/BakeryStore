@@ -38,7 +38,7 @@ namespace StoreBakery
 
             if (string.IsNullOrEmpty(login) || string.IsNullOrEmpty(password))
             {
-                MessageBox.Show("Будь ласка, заповніть всі поля!");
+                MessageBox.Show("Заповніть всі поля!");
                 return;
             }
             using (ApplicationContext db = new ApplicationContext())
@@ -47,7 +47,7 @@ namespace StoreBakery
 
                 if (authAdmin != null)
                 {
-                    MessageBox.Show("Все добре! Успішний вхід.");
+                    MessageBox.Show("Успішний вхід.");
 
                     AdminCabinetWindow adminCabinetWindow = new AdminCabinetWindow();
                     adminCabinetWindow.Show();

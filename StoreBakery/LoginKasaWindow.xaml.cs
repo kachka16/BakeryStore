@@ -36,7 +36,7 @@ namespace StoreBakery
 
             if (string.IsNullOrEmpty(login) || string.IsNullOrEmpty(password))
             {
-                MessageBox.Show("Будь ласка, заповніть всі поля!");
+                MessageBox.Show("Заповніть всі поля!");
                 return;
             }
 
@@ -47,14 +47,14 @@ namespace StoreBakery
 
                 if (authKasa != null)
                 {
-                    MessageBox.Show("Все добре! Успішний вхід.");
+                    MessageBox.Show("Успішний вхід.");
                     KasaSaleWindow kasaWindow = new KasaSaleWindow();
                     kasaWindow.Show();
                     this.Hide();
                 }
                 else
                 {
-                    MessageBox.Show("Невірний логін, ID або пароль!");
+                    MessageBox.Show("Невірний логін або пароль!");
                 }
             }
         }

@@ -406,13 +406,13 @@ namespace StoreBakery
         {
             if (!isOpen)
             {
-                MessageBox.Show("Неможливо виконати оплату: зміна закрита!", "Помилка", MessageBoxButton.OK, MessageBoxImage.Warning);
+                MessageBox.Show("Зміна закрита!", "Помилка", MessageBoxButton.OK, MessageBoxImage.Warning);
                 return;
             }
 
             if (CartItems.Count == 0)
             {
-                MessageBox.Show("Чек порожній! Додайте товари.", "Увага", MessageBoxButton.OK, MessageBoxImage.Warning);
+                MessageBox.Show("Додайте товари.", "Увага", MessageBoxButton.OK, MessageBoxImage.Warning);
                 return;
             }
 
@@ -492,13 +492,13 @@ namespace StoreBakery
         {
             if (!isOpen)
             {
-                MessageBox.Show("Неможливо виконати оплату: зміна закрита!", "Помилка", MessageBoxButton.OK, MessageBoxImage.Warning);
+                MessageBox.Show("Помилка. Зміна закрита!", "Помилка", MessageBoxButton.OK, MessageBoxImage.Warning);
                 return;
             }
 
             if (CartItems.Count == 0)
             {
-                MessageBox.Show("Чек порожній! Додайте товари.", "Увага", MessageBoxButton.OK, MessageBoxImage.Warning);
+                MessageBox.Show("Додайте товари.", "Увага", MessageBoxButton.OK, MessageBoxImage.Warning);
                 return;
             }
 
